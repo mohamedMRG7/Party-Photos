@@ -1,0 +1,41 @@
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/top_bottom_grident"
+        />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Downloaded Photos"
+           android:fontFamily="@font/architects_daughter"
+           android:layout_gravity="center"
+           android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+           android:textColor="@android:color/white"/>
+
+       <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/grid"
+           android:numColumns="3"
+           android:layout_marginTop="16dp"
+           android:padding="@dimen/widget_margin"
+           >
+
+       </GridView>
+
+
+
+   </LinearLayout>
+
+
+</FrameLayout>
