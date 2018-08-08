@@ -1,9 +1,11 @@
 package com.dev.mohamed.partyphotos.data;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,28 +18,26 @@ public class PartyData implements Parcelable {
     private String partyMainPhotoLink;
     private int numOfPhotos;
     private int numOfViews;
-    private List<String> listOfPhotosLinks;
+    private ArrayList<String> listOfPhotosLinks;
     private String partyPassword;
-    private String isPrivate;
+    private boolean closedParty;
 
-    private Bitmap partyMainPhotoBitmab;
+    private Uri partyMainPhotoUri;
     private List<Bitmap> listOfPhotsBitmab;
 
-    public PartyData(String partyMainPhotoLink, int numOfPhotos, int numOfViews,String isPrivate, List<String> listOfPhotosLinks) {
-        this.partyMainPhotoLink = partyMainPhotoLink;
-        this.numOfPhotos = numOfPhotos;
-        this.numOfViews = numOfViews;
-        this.listOfPhotosLinks = listOfPhotosLinks;
-        this.isPrivate=isPrivate;
+    public PartyData() {
     }
 
-    public PartyData(String partyName, String partyPassword,String isPrivate, Bitmap partyMainPhotoBitmab) {
+    public PartyData(String partyName, String partyPassword, boolean ClosedParty, Uri partyMainPhotoUri) {
         this.partyName = partyName;
         this.partyPassword = partyPassword;
-        this.partyMainPhotoBitmab = partyMainPhotoBitmab;
-        this.isPrivate=isPrivate;
+        this.partyMainPhotoUri = partyMainPhotoUri;
+        this.closedParty = ClosedParty;
     }
 
+    public boolean isClosedParty() {
+        return closedParty;
+    }
 
     public String getPartyName() {
         return partyName;
@@ -71,11 +71,11 @@ public class PartyData implements Parcelable {
         this.numOfViews = numOfViews;
     }
 
-    public List<String> getListOfPhotosLinks() {
+    public ArrayList<String> getListOfPhotosLinks() {
         return listOfPhotosLinks;
     }
 
-    public void setListOfPhotosLinks(List<String> listOfPhotosLinks) {
+    public void setListOfPhotosLinks(ArrayList<String> listOfPhotosLinks) {
         this.listOfPhotosLinks = listOfPhotosLinks;
     }
 
@@ -87,12 +87,12 @@ public class PartyData implements Parcelable {
         this.partyPassword = partyPassword;
     }
 
-    public Bitmap getPartyMainPhotoBitmab() {
-        return partyMainPhotoBitmab;
+    public Uri getPartyMainPhotoUri() {
+        return partyMainPhotoUri;
     }
 
-    public void setPartyMainPhotoBitmab(Bitmap partyMainPhotoBitmab) {
-        this.partyMainPhotoBitmab = partyMainPhotoBitmab;
+    public void setPartyMainPhotoUri(Uri partyMainPhotoUri) {
+        this.partyMainPhotoUri = partyMainPhotoUri;
     }
 
     public List<Bitmap> getListOfPhotsBitmab() {
@@ -120,8 +120,8 @@ public class PartyData implements Parcelable {
         dest.writeInt(this.numOfViews);
         dest.writeStringList(this.listOfPhotosLinks);
         dest.writeString(this.partyPassword);
-        dest.writeString(this.isPrivate);
-        dest.writeParcelable(this.partyMainPhotoBitmab, flags);
+        dest.writeByte(this.closedParty ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.partyMainPhotoUri, flags);
         dest.writeTypedList(this.listOfPhotsBitmab);
     }
 
@@ -132,8 +132,8 @@ public class PartyData implements Parcelable {
         this.numOfViews = in.readInt();
         this.listOfPhotosLinks = in.createStringArrayList();
         this.partyPassword = in.readString();
-        this.isPrivate = in.readString();
-        this.partyMainPhotoBitmab = in.readParcelable(Bitmap.class.getClassLoader());
+        this.closedParty = in.readByte() != 0;
+        this.partyMainPhotoUri = in.readParcelable(Uri.class.getClassLoader());
         this.listOfPhotsBitmab = in.createTypedArrayList(Bitmap.CREATOR);
     }
 

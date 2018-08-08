@@ -56,12 +56,26 @@ public class PartyManageAdapter  extends RecyclerView.Adapter<PartyManageAdapter
         notifyDataSetChanged();
     }
 
-    class PartyManageAdapterViewHolder extends RecyclerView.ViewHolder {
+    class PartyManageAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.img_photo)ImageView mPhoto;
         @BindView(R.id.img_delete)ImageView mDelete;
         public PartyManageAdapterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            mDelete.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos=getAdapterPosition();
+
+            switch (view.getId())
+            {
+                case R.id.img_delete:
+                    imagesList.remove(pos);
+                    notifyDataSetChanged();
+            }
+
         }
     }
 }

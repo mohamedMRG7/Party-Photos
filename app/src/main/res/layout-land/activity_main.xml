@@ -16,44 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:paddingTop="16dp"
-        android:text="LOGO"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display2"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_mostviewd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Most Viewd"
-        android:fontFamily="@font/architects_daughter"
-        android:layout_marginTop="36dp"
-        android:layout_marginLeft="8dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_logo"
-        tools:layout_editor_absoluteY="7dp" />
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/et_search"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mostviewd"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <AutoCompleteTextView
         android:id="@+id/et_search"
@@ -71,7 +41,7 @@
         android:drawableStart="@drawable/ic_loupe"
         android:fontFamily="@font/architects_daughter"
 
-        android:hint="Search for your party photos"
+        android:hint="@string/search_for_your_party_photos"
         android:drawablePadding="8dp"/>
 
 
@@ -100,6 +70,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="8dp"
+        android:onClick="startParty"
         android:src="@drawable/ic_photo_camera"
         app:layout_constraintBottom_toBottomOf="@id/guideline3"
         app:layout_constraintLeft_toLeftOf="parent"

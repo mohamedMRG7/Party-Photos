@@ -1,18 +1,25 @@
 package com.dev.mohamed.partyphotos;
 
+import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 
 import com.dev.mohamed.partyphotos.adapters.MostViewdRvAdapter;
+import com.dev.mohamed.partyphotos.adapters.PartyPhotosAdapter;
 import com.dev.mohamed.partyphotos.localStorage.DownloadPhotoAsynTask;
+import com.dev.mohamed.partyphotos.localStorage.LocalStorageUtilies;
 
 
 import java.io.File;
@@ -23,96 +30,147 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SingleImageShowActivity extends AppCompatActivity {
+
+
+
      Bitmap mBitmap;
-     File myDire=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/myparty");
-     int i=6;
+
+     @BindView(R.id.img_photo)ImageSwitcher imageSwitcher;
+     @BindView(R.id.img_right)ImageView imgRight;
+     @BindView(R.id.img_left)ImageView imgLeft;
+     ArrayList<String> listOfPhotosLinks;
+
+     int photoNum=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_image_show);
 
+        ButterKnife.bind(this);
+
+        listOfPhotosLinks=getIntent().getStringArrayListExtra(PartyPhotosAdapter.PARTY_LIST_KEY);
+        photoNum=getIntent().getIntExtra(PartyPhotosAdapter.PARTY_PHOTO_COUNT_KEY,0);
+
+
 
        // Glide.with(this).load(MostViewdRvAdapter.images[6]).into((ImageView) findViewById(R.id.img_photo));
 
-
-        DownloadPhotoAsynTask.startLoad(this, new DownloadPhotoAsynTask.Done() {
+        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
-            public void done(Bitmap bitmap) {
-
-                ((ImageView) findViewById(R.id.img_photo)).setImageBitmap(bitmap);
-                mBitmap=bitmap;
+            public View makeView() {
+                ImageView myView = new ImageView(getApplicationContext());
+                myView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                myView.setLayoutParams(new
+                        ImageSwitcher.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.WRAP_CONTENT));
+                return myView;
             }
-        },MostViewdRvAdapter.images[6]);
+        });
 
 
-        List list = new ArrayList();
-        for (int i=0;i<myDire.list().length;i++)
-        {
-            Bitmap bitmap= BitmapFactory.decodeFile(myDire.getPath()+"/"+myDire.list()[i]);
-            list.add(bitmap);
-        }
 
-        Log.e("list",list.size()+"");
-
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                    RequestBuilder<Bitmap> b= Glide.with(getApplicationContext()).asBitmap().load(MostViewdRvAdapter.images[0]);
-                    final FutureTarget <Bitmap> target=b.submit();
-                try {
-                     bitmap=target.get();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+        showPhoto(Arrow.INIT);
 
 
-            }
-        }).start();*/
+        setArrowVisibility(Arrow.INIT);
+
+
 
 
     }
 
-    private void savePhoto(Bitmap bitmap)
-    {
-        final Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        final String fname = "image" + n + ".png";
-        myDire.mkdirs();
-        File image = new File(myDire, fname);
 
-        FileOutputStream out ;
-
-        try {
-            out=new FileOutputStream(image);
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
-            out.close();
-            out.flush();
-            Toast.makeText(this,"done",Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void downloadImage(View view) {
 
-        savePhoto(mBitmap);
 
-        DownloadPhotoAsynTask.startLoad(this, new DownloadPhotoAsynTask.Done() {
-            @Override
-            public void done(Bitmap bitmap) {
+                LocalStorageUtilies.downloadImage(mBitmap,SingleImageShowActivity.this);
 
-                ((ImageView) findViewById(R.id.img_photo)).setImageBitmap(bitmap);
-                mBitmap=bitmap;
-            }
-        },MostViewdRvAdapter.images[i]);
-        i++;
+    }
+
+    private void setArrowVisibility(Arrow arrowVisibility)
+    {
+
+        imgLeft.setVisibility(View.VISIBLE);
+        imgRight.setVisibility(View.VISIBLE);
+        if (arrowVisibility==Arrow.LEFT) {
+            if (photoNum - 1 == 0)
+                imgLeft.setVisibility(View.GONE);
+
+        }
+        if (arrowVisibility==Arrow.Right) {
+            if (photoNum + 1 == listOfPhotosLinks.size() - 1)
+                imgRight.setVisibility(View.GONE);
+
+        }
+
+        if (arrowVisibility==Arrow.INIT)
+            if (photoNum==0)
+                imgLeft.setVisibility(View.GONE);
+            else if (photoNum==listOfPhotosLinks.size()-1)
+                imgRight.setVisibility(View.GONE);
+    }
+
+    public void nextPhoto(View view) {
+
+        showPhoto(Arrow.Right);
+    }
+
+    public void previousPhoto(View view) {
+      showPhoto(Arrow.LEFT);
+    }
+
+    private void showPhoto(Arrow arrow)
+    {
+        switch (arrow)
+        {
+            case LEFT:
+                DownloadPhotoAsynTask.startLoad(this, new DownloadPhotoAsynTask.Done() {
+                    @Override
+                    public void done(Bitmap bitmap) {
+
+                        Drawable drawable=new BitmapDrawable(getResources(),bitmap);
+                        imageSwitcher.setImageDrawable(drawable);
+                        mBitmap=bitmap;
+                    }
+                },listOfPhotosLinks.get(photoNum-1));
+                setArrowVisibility(Arrow.LEFT);
+                photoNum--;
+
+                break;
+            case Right:
+                DownloadPhotoAsynTask.startLoad(this, new DownloadPhotoAsynTask.Done() {
+                    @Override
+                    public void done(Bitmap bitmap) {
+
+
+                        Drawable drawable=new BitmapDrawable(getResources(),bitmap);
+                        imageSwitcher.setImageDrawable(drawable);
+                        mBitmap=bitmap;
+                    }
+                },listOfPhotosLinks.get(photoNum+1));
+                setArrowVisibility(Arrow.Right);
+                photoNum++;
+                break;
+            case INIT:
+                DownloadPhotoAsynTask.startLoad(this, new DownloadPhotoAsynTask.Done() {
+                    @Override
+                    public void done(Bitmap bitmap) {
+
+                        Drawable drawable=new BitmapDrawable(getResources(),bitmap);
+                        imageSwitcher.setImageDrawable(drawable);
+                        mBitmap=bitmap;
+                    }
+                },listOfPhotosLinks.get(photoNum));
+        }
+    }
+
+    private   enum Arrow
+    {
+        LEFT,Right,INIT
     }
 }

@@ -2,19 +2,15 @@ package com.dev.mohamed.partyphotos.fireBase;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.Toast;
 
 import com.dev.mohamed.partyphotos.data.PartyData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,8 +29,7 @@ public class DataBaseUtilies {
 
 
     private static final String CARDS_CHILD="parties";
-    public static final int CARD_ADDTION=1;
-    private static final int OFFER_ADDITION=2;
+
     public static void insert(PartyData data, final Activity context)
     {
 
@@ -62,51 +57,20 @@ public class DataBaseUtilies {
     }
 
 
-    public static void acceptCard (String uId, final Context context)
-    {
-        Map value=new HashMap<>();
-        value.put("isAccepted","true");
-        FirebaseDatabase.getInstance().getReference().child(CARDS_CHILD).child(uId).updateChildren(value)
-                .addOnSuccessListener(new OnSuccessListener() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        Toast.makeText(context, "done",Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context,"failed",Toast.LENGTH_SHORT).show();
-            }
-        });
 
-    }
-    public static void updateOffer (String uId, String offerImageLink , final Context context, final FragmentManager manager)
+    public static void addView (String partyName, int newNumViews)
     {
 
         Map value=new HashMap<>();
-        value.put("offerImg",offerImageLink);
-        FirebaseDatabase.getInstance().getReference().child(CARDS_CHILD).child(uId).updateChildren(value)
-                .addOnSuccessListener(new OnSuccessListener() {
-                    @Override
-                    public void onSuccess(Object o) {
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context,"failed",Toast.LENGTH_SHORT).show();
-                    }
-                });
+        value.put("numOfViews",newNumViews);
+        FirebaseDatabase.getInstance().getReference().child(CARDS_CHILD).child(partyName).updateChildren(value);
 
     }
 
 
 
 
-    public static void getDataFromDb(final Context context, final onresiveData data)
+    public static void getDataFromDb(final Context context, final OnResiveData data)
     {
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child(CARDS_CHILD);
 
@@ -117,15 +81,7 @@ public class DataBaseUtilies {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 
-                try{
-
-                    if (!dataSnapshot.getKey().equals("zzzzzzzzzzzzz")){
                         data.resiveData(dataSnapshot.getValue(PartyData.class));
-                        }
-                    else data.lastReseved();
-
-                }catch (Exception ignored){}
-
 
 
             }
@@ -133,18 +89,12 @@ public class DataBaseUtilies {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                try {
-                    data.resiveData(dataSnapshot.getValue(PartyData.class));
-
-                }catch (Exception ignored){}
-
-
-
+                    data.updateValue(dataSnapshot.getValue(PartyData.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                data.deleteUser(dataSnapshot.getValue(PartyData.class));
+
             }
 
             @Override
@@ -164,11 +114,11 @@ public class DataBaseUtilies {
     }
 
 
-    public  interface onresiveData
+    public  interface OnResiveData
     {
         void resiveData(PartyData data);
-        void lastReseved();
-        void deleteUser(PartyData data);
+        void updateValue(PartyData data);
+
     }
 
 }

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:apps="http://schemas.android.com/tools">
     <android.support.design.widget.AppBarLayout
@@ -49,17 +50,18 @@
                    android:layout_height="wrap_content"
                    android:layout_marginEnd="8dp"
                    android:layout_marginStart="8dp"
+                   android:transitionName="@string/avatar"
                    android:background="@drawable/mainscreen_oval"
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintStart_toStartOf="parent" />
 
 
                <TextView
-                   android:id="@+id/party_name"
+                   android:id="@+id/tv_party_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/architects_daughter"
-                   android:text="Best Party Ever"
+                   tools:text="Best Party Ever"
                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                    app:layout_constraintBottom_toTopOf="@+id/view"
                    app:layout_constraintLeft_toLeftOf="parent"
@@ -73,7 +75,7 @@
                    android:drawableLeft="@drawable/ic_eye"
                    android:drawablePadding="8dp"
                    android:drawableStart="@drawable/ic_eye"
-                   android:text="16"
+                   tools:text="16"
                    app:layout_constraintBottom_toTopOf="@+id/view"
                    app:layout_constraintLeft_toRightOf="@id/img_avatar"
                    app:layout_constraintRight_toLeftOf="@id/tv_photosnum" />
@@ -85,7 +87,7 @@
                    android:drawableLeft="@drawable/ic_gallery"
                    android:drawablePadding="8dp"
                    android:drawableStart="@drawable/ic_gallery"
-                   android:text="20"
+                   tools:text="20"
                    app:layout_constraintBottom_toTopOf="@+id/view"
                    app:layout_constraintLeft_toRightOf="@id/tv_viewsnum"
                    app:layout_constraintRight_toRightOf="parent" />

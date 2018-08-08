@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.dev.mohamed.partyphotos.R;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,8 +23,8 @@ import java.util.Random;
 public class LocalStorageUtilies {
 
 
-    private String downloadFolder ="Party Photos";
-    private static File myDire=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/myparty");
+    private static String downloadFolder ="Party Photos";
+    private static File myDire=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+downloadFolder);
 
     public static void downloadImage(Bitmap bitmap, Context context)
     {
@@ -41,7 +43,7 @@ public class LocalStorageUtilies {
             bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
             out.close();
             out.flush();
-            Toast.makeText(context,"done",Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.done,Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

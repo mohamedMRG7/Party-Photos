@@ -30,8 +30,7 @@ public class GrideViewRemoteService extends RemoteViewsService {
  class GridViewRemoteFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context context;
-    String [] images;
-    String [] txt={"hey","Hello","mar7aba"};
+
     List<Bitmap> photos;
 
     public GridViewRemoteFactory(Context context) {

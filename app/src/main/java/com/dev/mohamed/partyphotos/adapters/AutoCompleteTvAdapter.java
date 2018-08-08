@@ -3,20 +3,20 @@ package com.dev.mohamed.partyphotos.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dev.mohamed.partyphotos.R;
+import com.dev.mohamed.partyphotos.data.PartyData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by moham on 6/25/2018.
@@ -24,18 +24,24 @@ import java.util.List;
 
 public class AutoCompleteTvAdapter extends ArrayAdapter {
 
-    String [] names={"mohamed","mahmod","mosa","ahmed","a5dr"};
 
-    List<String>names1;
-    List<String>temp;
-    ArrayList sugg=new ArrayList();
-    public AutoCompleteTvAdapter(@NonNull Context context ,List<String> list) {
+
+    ArrayList<PartyData> partyData;
+    ArrayList<PartyData> temp;
+    ArrayList<PartyData> sugg=new ArrayList<>();
+    public AutoCompleteTvAdapter(@NonNull Context context ,ArrayList<PartyData> list) {
         super(context, android.R.layout.simple_list_item_1,list);
-        names1=list;
+        partyData =list;
         temp=new ArrayList<>(list);
 
     }
 
+    public void updateData(ArrayList<PartyData> data)
+    {
+        partyData =data;
+        temp=new ArrayList<>(data);
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -43,15 +49,23 @@ public class AutoCompleteTvAdapter extends ArrayAdapter {
         convertView= LayoutInflater.from(getContext()).inflate(R.layout.autocomplete_item,parent,false);
 
         TextView textView=convertView.findViewById(R.id.tv_name);
+        ImageView avatar=convertView.findViewById(R.id.o3);
+        textView.setText(partyData.get(position).getPartyName());
 
-        textView.setText(names1.get(position));
+        if (partyData.get(position).getPartyMainPhotoLink()!=null)
+            Glide.with(getContext()).load(partyData.get(position).getPartyMainPhotoLink())
+                    .apply(new RequestOptions().circleCrop()).into(avatar);
+
+        else
+            Glide.with(getContext()).load(partyData.get(position).getListOfPhotosLinks().get(0))
+                    .apply(new RequestOptions().circleCrop()).into(avatar);
 
         return convertView;
     }
 
     @Override
     public int getCount() {
-        return names1.size();
+        return partyData.size();
     }
 
 
@@ -68,13 +82,12 @@ public class AutoCompleteTvAdapter extends ArrayAdapter {
             {
 
                 sugg.clear();
-                for (String x : temp)
+                for (PartyData party : temp)
                 {
+                        if (party.getPartyName().toLowerCase().startsWith(charSequence.toString()))
+                            sugg.add(party);
 
-                    if (x.toLowerCase().startsWith(charSequence.toString())) {
-                        sugg.add(x);
 
-                    }
                 }
 
 
@@ -89,11 +102,11 @@ public class AutoCompleteTvAdapter extends ArrayAdapter {
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 
-            ArrayList<String> list=(ArrayList<String>)filterResults.values;
+            ArrayList<PartyData> list=(ArrayList<PartyData>)filterResults.values;
 
             if(filterResults.count>0) {
                 clear();
-                for (String c : list) {
+                for (PartyData c : list) {
 
                     add(c);
                     notifyDataSetChanged();
@@ -104,7 +117,7 @@ public class AutoCompleteTvAdapter extends ArrayAdapter {
 
     @Nullable
     @Override
-    public Object getItem(int position) {
-        return names1.get(position);
+    public PartyData getItem(int position) {
+        return partyData.get(position);
     }
 }

@@ -37,6 +37,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/image_fram_shape"
+        android:transitionName="@string/avatar"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/o1"

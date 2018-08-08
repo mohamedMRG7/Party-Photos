@@ -12,7 +12,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dev.mohamed.partyphotos.DetailsActivity;
+import com.dev.mohamed.partyphotos.MainActivity;
 import com.dev.mohamed.partyphotos.R;
+import com.dev.mohamed.partyphotos.data.PartyData;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +39,13 @@ public class MostViewdRvAdapter extends RecyclerView.Adapter<MostViewdRvAdapter.
     ,"https://thumbs.dreamstime.com/t/%CF%80%CE%BF%CF%81%CF%84%CF%81%CE%AD%CF%84%CE%BF-%CF%84%CE%B7%CF%82-%CF%8C%CE%BC%CE%BF%CF%81%CF%86%CE%B7%CF%82-%CE%BD%CE%AD%CE%B1%CF%82-%CE%B3%CF%85%CE%BD%CE%B1%CE%AF%CE%BA%CE%B1%CF%82-%CF%83%CF%84%CE%B7%CE%BD-%CE%AC%CE%B3%CF%81%CE%B9%CE%B1-%CE%B4%CF%8D%CF%83%CE%BA%CE%BF%CE%BB%CE%B7-%CF%80%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1-108337618.jpg"};
 
     Context context;
+    ArrayList<PartyData> data;
+    OnPartyClick onPartyClick;
+
+    public MostViewdRvAdapter(OnPartyClick onPartyClick) {
+        this.onPartyClick = onPartyClick;
+    }
+
     @NonNull
     @Override
     public AdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,29 +64,47 @@ public class MostViewdRvAdapter extends RecyclerView.Adapter<MostViewdRvAdapter.
     @Override
     public void onBindViewHolder(@NonNull AdapterViewHolder holder, int position) {
 
-        Glide.with(context).load(images[position]).apply(new RequestOptions().circleCrop()).into(holder.frame);
+        if (data.get(position).getPartyMainPhotoLink()!=null)
+        Glide.with(context).load(data.get(position).getPartyMainPhotoLink())
+                .apply(new RequestOptions().circleCrop()).into(holder.frame);
+
+        else
+            Glide.with(context).load(data.get(position).getListOfPhotosLinks().get(0))
+                .apply(new RequestOptions().circleCrop()).into(holder.frame);
     }
 
+    public void updatePartiesList(ArrayList<PartyData> data)
+    {
+        this.data=data;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
-        return images.length;
+         if (data==null)
+             return 0;
+         else return data.size();
     }
 
     class AdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ImageView frame;
+       @BindView(R.id.o3) ImageView frame;
 
         public AdapterViewHolder(View itemView) {
             super(itemView);
-            frame=itemView.findViewById(R.id.o3);
+            ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            context.startActivity(new Intent(context, DetailsActivity.class));
+            PartyData partyData=data.get(getAdapterPosition());
+            onPartyClick.partyClick(partyData,frame);
         }
     }
 
 
+    public interface OnPartyClick
+    {
+        void partyClick(PartyData data,ImageView avatar);
+    }
 }

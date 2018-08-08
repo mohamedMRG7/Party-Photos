@@ -2,4 +2,21 @@
     <string name="app_name">Party Photos</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="please_wait">Please Wait .....</string>
+    <string name="empty_field_message">Please enter the party name ..</string>
+    <string name="awesome_parties">Awesome Parties</string>
+    <string name="search_for_your_party_photos">Search for your party photos</string>
+    <string name="password">Password</string>
+    <string name="party_pass_request">Please enter party password</string>
+    <string name="wrong_pass">Wrong Password</string>
+    <string name="open">Open</string>
+    <string name="cancel">Cancel</string>
+    <string name="cool_party">Cool Party :D</string>
+    <string name="no_connection_message">No internet Connection</string>
+    <string name="done">Done</string>
+    <string name="avatar">avatar</string>
+    <string name="click_to_set_main_party_photo">Click to set main party photo</string>
+    <string name="party_name">Party Name</string>
+    <string name="downloaded_photos">Downloaded Photos</string>
+    <string name="please_enter_all_fields">Please enter the all fields ..</string>
 </resources>

@@ -36,23 +36,26 @@ public class StorageUtilies {
         while (iterator.hasNext())
         {
 
-            listOfLinks.add(getImageDonloadUrl(iterator.next()));
+          //  listOfLinks.add(getImageDonloadUrl(iterator.next()));
 
-            if (!iterator.hasNext())
-                onImageUploaded.loaded(listOfLinks);
+           // if (!iterator.hasNext())
+            //    onImageUploaded.loaded(listOfLinks);
 
         }
 
     }
+    static int i= 0;
+    public static void resiteCount()
+    {i=0;}
 
-
-    public static String getImageDonloadUrl(Uri file) {
+    public static void getImageDonloadUrl(Uri file, final OnImageUploaded onImageUploaded) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
          StorageReference reference = storage.getReference();
-        final String[] link = {""};
+
+         Log.e("i",i+" =i ");
 
 
-        if (file != null) {
+        if (file != null ) {
 
 
             final StorageReference photoref = reference.child("photos").child(file.getLastPathSegment());
@@ -74,19 +77,18 @@ public class StorageUtilies {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        link[0] =downloadUri.toString();
-                        Log.e("lol2",link[0]);
+                        i++;
+                        onImageUploaded.loaded(downloadUri.toString(),i);
                     } else {
                         // Handle failures
                         // ...
                     }
                 }
             });
-            Log.e("lol",link[0]);
-            return link[0];
+
         }
 
-        return link[0];
+
 
     }
 
@@ -116,6 +118,6 @@ public class StorageUtilies {
 
     public interface OnImageUploaded
     {
-        void loaded(ArrayList<String> urls);
+        void loaded(String link,int i);
     }
 }

@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dev.mohamed.partyphotos.R;
 import com.dev.mohamed.partyphotos.SingleImageShowActivity;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -30,6 +31,9 @@ public class PartyPhotosAdapter extends RecyclerView.Adapter<PartyPhotosAdapter.
 
 
     Context context;
+    ArrayList<String>listOfPhotos;
+    public static final String PARTY_LIST_KEY="partyListKey";
+    public static final  String PARTY_PHOTO_COUNT_KEY="photoCount";
     @NonNull
     @Override
     public PartyphotosAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,37 +49,44 @@ public class PartyPhotosAdapter extends RecyclerView.Adapter<PartyPhotosAdapter.
     @Override
     public void onBindViewHolder(@NonNull PartyphotosAdapterViewHolder holder, int position) {
 
-        Random random=new Random();
 
 
-        Glide.with(context).load(MostViewdRvAdapter.images[position]).into(holder.photo);
-        int widthRatio=16;
-        int highRatio=14;
-        String ratio =String.format("%d:%d", widthRatio,highRatio);
-        set.clone(holder.mConstraintLayout);
-        set.setDimensionRatio(holder.photo.getId(), ratio);
-        set.applyTo(holder.mConstraintLayout);
+
+        Glide.with(context).load(listOfPhotos.get(position)).into(holder.photo);
+
+    }
+
+    public void updateListOfPhotos(ArrayList<String>listOfPhotos)
+    {
+        this.listOfPhotos=listOfPhotos;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return MostViewdRvAdapter.images.length;
+       if (listOfPhotos!=null)
+           return listOfPhotos.size();
+       else
+           return 0;
     }
 
     class PartyphotosAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.img_photo) ImageView photo;
-        ConstraintLayout mConstraintLayout;
+
         public PartyphotosAdapterViewHolder(View itemView) {
             super(itemView);
            // photo=itemView.findViewById(R.id.img_photo);
             ButterKnife.bind(this,itemView);
-            mConstraintLayout=itemView.findViewById(R.id.parentContsraint);
+
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            context.startActivity(new Intent(context, SingleImageShowActivity.class));
+            Intent intent=new Intent(context, SingleImageShowActivity.class);
+            intent.putExtra(PARTY_PHOTO_COUNT_KEY,getAdapterPosition());
+            intent.putExtra(PARTY_LIST_KEY,listOfPhotos);
+            context.startActivity(intent);
         }
     }
 }
