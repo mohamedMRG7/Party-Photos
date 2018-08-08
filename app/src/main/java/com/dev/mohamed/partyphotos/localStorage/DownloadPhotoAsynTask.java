@@ -3,15 +3,12 @@ package com.dev.mohamed.partyphotos.localStorage;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.FutureTarget;
-import com.dev.mohamed.partyphotos.adapters.MostViewdRvAdapter;
 
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**

@@ -4,7 +4,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dev.mohamed.partyphotos.adapters.AutoCompleteTvAdapter;
-import com.dev.mohamed.partyphotos.adapters.MostViewdRvAdapter;
+import com.dev.mohamed.partyphotos.adapters.MainScreenRvAdapter;
 import com.dev.mohamed.partyphotos.connection.CheckConnection;
 import com.dev.mohamed.partyphotos.data.PartyData;
 import com.dev.mohamed.partyphotos.fireBase.DataBaseUtilies;
@@ -36,7 +34,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements DataBaseUtilies.OnResiveData,MostViewdRvAdapter.OnPartyClick{
+public class MainActivity extends AppCompatActivity implements DataBaseUtilies.OnResiveData,MainScreenRvAdapter.OnPartyClick{
 
 
 
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseUtilies.O
     public static final String OPEN_PARTY_KEY="openPartyKey";
     ArrayList<PartyData> partiesDataList;
     ArrayList<PartyData> openPartiesDataList;
-    MostViewdRvAdapter adapter;
+    MainScreenRvAdapter adapter;
      AutoCompleteTvAdapter autoCompleteTvAdapter;
     AlertDialog b;
     AlertDialog.Builder dialogBuilder;
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseUtilies.O
 
         final AutoCompleteTextView search=findViewById(R.id.et_search);
         RecyclerView recyclerView=findViewById(R.id.rv_photos);
-        adapter=new MostViewdRvAdapter(this);
+        adapter=new MainScreenRvAdapter(this);
         adapter.updatePartiesList(openPartiesDataList);
         GridLayoutManager layoutManager=new GridLayoutManager(this,2,GridLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);

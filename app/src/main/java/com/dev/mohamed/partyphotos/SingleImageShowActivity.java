@@ -2,33 +2,22 @@ package com.dev.mohamed.partyphotos;
 
 import android.app.ActionBar;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 
-import com.dev.mohamed.partyphotos.adapters.MostViewdRvAdapter;
 import com.dev.mohamed.partyphotos.adapters.PartyPhotosAdapter;
 import com.dev.mohamed.partyphotos.localStorage.DownloadPhotoAsynTask;
 import com.dev.mohamed.partyphotos.localStorage.LocalStorageUtilies;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +46,7 @@ public class SingleImageShowActivity extends AppCompatActivity {
 
 
 
-       // Glide.with(this).load(MostViewdRvAdapter.images[6]).into((ImageView) findViewById(R.id.img_photo));
+       // Glide.with(this).load(MainScreenRvAdapter.images[6]).into((ImageView) findViewById(R.id.img_photo));
 
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override

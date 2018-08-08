@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.dev.mohamed.partyphotos.adapters.MostViewdRvAdapter;
 import com.dev.mohamed.partyphotos.adapters.PartyPhotosAdapter;
 import com.dev.mohamed.partyphotos.data.PartyData;
 
