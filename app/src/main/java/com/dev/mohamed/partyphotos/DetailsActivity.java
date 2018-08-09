@@ -1,9 +1,15 @@
 package com.dev.mohamed.partyphotos;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,11 +30,18 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_viewsnum)TextView tvNumOfViews;
     @BindView(R.id.tv_photosnum)TextView tvNumOfPhotos;
     @BindView(R.id.tv_party_name)TextView tvPartyName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_detalis);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new Explode());
+        }
         ButterKnife.bind(this);
 
         PartyData partyData= (PartyData) getIntent().getExtras().get(MainActivity.OPEN_PARTY_KEY);

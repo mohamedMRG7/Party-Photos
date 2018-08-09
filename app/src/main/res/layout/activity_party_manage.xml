@@ -22,7 +22,7 @@
                 android:id="@+id/img_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-
+                android:contentDescription="@string/logo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 tools:text="The awsom party"
@@ -53,7 +54,8 @@
                 android:src="@drawable/ic_photo_camera"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/take_new_photo_button"/>
 
 
         </android.support.constraint.ConstraintLayout>
@@ -79,6 +81,7 @@
         android:layout_marginRight="8dp"
         android:onClick="addPartyToDb"
         android:src="@drawable/ic_checked"
+        android:contentDescription="@string/share_the_party_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

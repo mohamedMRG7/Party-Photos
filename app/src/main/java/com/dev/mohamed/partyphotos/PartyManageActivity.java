@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class PartyManageActivity extends AppCompatActivity implements StorageUti
     ArrayList<String>mPhotosLinkList;
     @BindView(R.id.rv_party_manage)RecyclerView rvPartyPhotosList;
     @BindView(R.id.tv_party_name)TextView tvPartyname;
+    @BindView(R.id.toolbar)Toolbar toolbar;
     PartyManageAdapter adapter;
     private boolean isFirstStart=true;
     private final String First_START_KEY ="firstStart";
@@ -59,6 +61,8 @@ public class PartyManageActivity extends AppCompatActivity implements StorageUti
         setContentView(R.layout.activity_party_manage);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
 
         mPhotosList=new ArrayList<>();

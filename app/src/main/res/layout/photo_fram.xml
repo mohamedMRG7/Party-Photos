@@ -26,6 +26,7 @@
         android:layout_height="80dp"
         android:background="@drawable/image_fram_shape"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/o1"
         app:layout_constraintEnd_toEndOf="@+id/o1"
@@ -39,9 +40,11 @@
         android:background="@drawable/image_fram_shape"
         android:transitionName="@string/avatar"
         android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/o1"
         app:layout_constraintEnd_toEndOf="@+id/o1"
         app:layout_constraintStart_toStartOf="@+id/o1"
-        app:layout_constraintTop_toTopOf="@+id/o1" />
+        app:layout_constraintTop_toTopOf="@+id/o1"
+        android:contentDescription="@string/party_avatar"/>
 </android.support.constraint.ConstraintLayout>

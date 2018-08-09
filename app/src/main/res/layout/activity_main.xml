@@ -30,7 +30,8 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/logo" />
 
     <TextView
         android:id="@+id/tv_mostviewd"
@@ -40,6 +41,7 @@
         android:fontFamily="@font/architects_daughter"
         android:layout_marginTop="36dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +109,8 @@
         app:layout_constraintBottom_toBottomOf="@id/guideline3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline3" />
+        app:layout_constraintTop_toTopOf="@id/guideline3"
+        android:contentDescription="@string/start_new_party_button"/>
 
 
 </android.support.constraint.ConstraintLayout>

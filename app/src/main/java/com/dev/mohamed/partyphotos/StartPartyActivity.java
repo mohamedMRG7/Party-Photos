@@ -17,8 +17,10 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,6 +49,7 @@ public class StartPartyActivity extends AppCompatActivity implements  SwitchComp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_party);
+
 
         ButterKnife.bind(this);
         Glide.with(this).load(R.drawable.pplogocam).apply(new RequestOptions().circleCrop()).into(mAvatar);
@@ -127,6 +130,7 @@ public class StartPartyActivity extends AppCompatActivity implements  SwitchComp
                data=new PartyData(partyname,partyPass,isPrivate,mainPhotoBitmab);
                intent.putExtra(PARTY_DATA_KEY,data);
                startActivity(intent);
+               finish();
            }else
                {
                    mPartyName.setHintTextColor(Color.RED);
@@ -141,6 +145,7 @@ public class StartPartyActivity extends AppCompatActivity implements  SwitchComp
                data=new PartyData(partyname,partyPass,isPrivate,mainPhotoBitmab);
                intent.putExtra(PARTY_DATA_KEY,data);
                startActivity(intent);
+               finish();
            }else
            {
                if (partyname.isEmpty()&& partyPass.isEmpty()){mPartyName.setHintTextColor(Color.RED);  mPassword.setHintTextColor(Color.RED);}

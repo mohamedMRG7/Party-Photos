@@ -19,4 +19,20 @@
     <string name="party_name">Party Name</string>
     <string name="downloaded_photos">Downloaded Photos</string>
     <string name="please_enter_all_fields">Please enter the all fields ..</string>
+    <string name="main_party_photo">Main party photo</string>
+    <string name="party_avatar">Party avatar</string>
+    <string name="start_new_party_button">Start new party button</string>
+    <string name="logo">Logo</string>
+    <string name="take_new_photo_button">Take new Photo button</string>
+    <string name="share_the_party_button">Share the party button</string>
+    <string name="previous_photo_button">Previous photo button</string>
+    <string name="next_photo_button">Next photo button</string>
+    <string name="download_photo_button">Download photo button</string>
+    <string name="close_party_icon">Close party icon</string>
+    <string name="start_taking_the_party_photos_button">Start taking the party photos button</string>
+    <string name="photo_taken_by_camera">Photo taken by camera</string>
+    <string name="delete_the_photo_button">Delete the photo button</string>
+    <string name="party_photo">party photo</string>
+    <string name="downloaded_photo">Downloaded photo</string>
+    <string name="no_downloaded_photos_to_show">No downloaded photos to show</string>
 </resources>

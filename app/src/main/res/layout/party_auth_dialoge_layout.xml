@@ -11,7 +11,8 @@
         android:transitionName="@string/avatar"
         android:layout_gravity="center"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:contentDescription="@string/party_avatar"/>
 
     <TextView
         android:id="@+id/tv_party_name"
