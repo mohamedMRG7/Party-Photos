@@ -41,10 +41,10 @@
 
                <ImageView
                    android:layout_width="match_parent"
-                   android:layout_height="0dp"
-                   app:layout_constraintTop_toTopOf="@+id/img_avatar"
+                   android:layout_height="72dp"
                    android:background="@drawable/gridiant_bg"
-                   app:layout_constraintBottom_toBottomOf="@id/img_avatar"/>
+                   app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+                   app:layout_constraintTop_toTopOf="@+id/img_avatar" />
                <ImageView
                    android:id="@+id/img_avatar"
                    android:layout_width="wrap_content"

@@ -10,7 +10,9 @@
         android:id="@+id/img_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"/>
+        android:minHeight="300dp"
+        android:minWidth="300dp"
+        android:scaleType="fitXY"/>
 
 
     <ImageView
